@@ -12,5 +12,17 @@
 :: Executes JMXEval
 ::
 set BASE_DIR=%~dp0
-set LIB_DIR=%BASE_DIR%/lib
-%JAVA_HOME%\bin\java -classpath %BASE_DIR%\jmxeval-1.2.5.jar;%LIB_DIR%/args4j-2.0.16.jar com.adahas.tools.jmxeval.App %*
+set LIB_DIR=%BASE_DIR%lib
+
+REM needed to overcome weird loop behavior
+REM in conjunction with variable expansion
+SETLOCAL enabledelayedexpansion
+
+REM construct classpath of seperate jars
+SET cp=%BASE_DIR%jmxeval-1.2.5.jar;
+
+FOR %%F IN (%LIB_DIR%\*.jar) DO (
+  SET cp=!cp!;%%F%
+)
+
+%JAVA_HOME%\bin\java -classpath %cp% com.adahas.tools.jmxeval.App %*
