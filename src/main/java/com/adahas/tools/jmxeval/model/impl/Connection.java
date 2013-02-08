@@ -40,7 +40,7 @@ public class Connection extends Element {
   /**
    * Whether SSL is enabled
    */
-  private transient final boolean ssl;
+  private transient final String ssl;
   
   /**
    * Constructs the element
@@ -54,7 +54,8 @@ public class Connection extends Element {
     url = getNodeAttribute(node, "url");
     username = getNodeAttribute(node, "username");
     password = getNodeAttribute(node, "password");
-    ssl = Boolean.parseBoolean(getNodeAttribute(node, "ssl", Boolean.FALSE.toString()));
+    //ssl = Boolean.parseBoolean(getNodeAttribute(node, "ssl", Boolean.FALSE.toString()));
+    ssl = getNodeAttribute(node, "ssl", Boolean.FALSE.toString());
   }
   
   /**
@@ -64,16 +65,15 @@ public class Connection extends Element {
   @SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.EmptyCatchBlock"})
   public void process(final Context context) throws EvalException {
     JMXConnector jmxConnector = null;
-    
     try {
-      final JMXServiceURL jmxServiceURL = new JMXServiceURL(url);
+      final JMXServiceURL jmxServiceURL = new JMXServiceURL(replaceWithVars(context, url));
       final Map<String, Object> jmxEnv = new HashMap<String, Object>();
       
       if (username != null && password != null) {
-        jmxEnv.put(JMXConnector.CREDENTIALS, new String[] {username, password});
+        jmxEnv.put(JMXConnector.CREDENTIALS, new String[] {replaceWithVars(context,username), replaceWithVars(context,password)});
       }
       
-      if (ssl) {
+      if (Boolean.parseBoolean(replaceWithVars(context,ssl))) {
         SslRMIClientSocketFactory csf = new SslRMIClientSocketFactory();
         jmxEnv.put("com.sun.jndi.rmi.factory.socket", csf);
       }
