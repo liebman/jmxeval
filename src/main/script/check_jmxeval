@@ -15,9 +15,9 @@ BASE_DIR=`dirname $0`
 LIB_DIR="$BASE_DIR/lib"
 
 # build classpath from main jar and all jars in lib
-CP=$BASE_DIR/jmxeval-1.2.5.jar
+CP=$BASE_DIR/jmxeval-1.2.6.jar
 for i in "$LIB_DIR/*.jar"; do
-  CP="$cp:$i";
+  CP="$CP:$i";
 done
 
 $JAVA_HOME/bin/java -classpath "$CP" com.adahas.tools.jmxeval.App $@

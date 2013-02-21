@@ -19,7 +19,7 @@ REM in conjunction with variable expansion
 SETLOCAL enabledelayedexpansion
 
 REM construct classpath of seperate jars
-SET cp=%BASE_DIR%jmxeval-1.2.5.jar;
+SET cp=%BASE_DIR%jmxeval-1.2.6.jar;
 
 FOR %%F IN (%LIB_DIR%\*.jar) DO (
   SET cp=!cp!;%%F%
