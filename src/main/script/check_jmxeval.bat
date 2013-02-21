@@ -26,3 +26,4 @@ FOR %%F IN (%LIB_DIR%\*.jar) DO (
 )
 
 %JAVA_HOME%\bin\java -classpath %cp% com.adahas.tools.jmxeval.App %*
+

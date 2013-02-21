@@ -123,7 +123,7 @@ public class Context {
   public Object getVar(final String name) throws EvalException {
     String key = name;
     String defaultValue = null;
-    int seperator = name.indexOf("=");
+    int seperator = name.indexOf(":");
     if (seperator >= 0)
     {
         key = name.substring(0, seperator);
@@ -138,17 +138,17 @@ public class Context {
     }
   }
   
-  @Option (name="--"+CONFIG_VALIDATE, metaVar="<boolean>",usage="set validation true|false default is false")
+  @Option(name="--" + CONFIG_VALIDATE, metaVar="<boolean>", usage="set validation true|false, default is false")
   protected void setConfigValidate(String value) {
     config.put(CONFIG_VALIDATE, value);
   }
   
-  @Option (name="--"+CONFIG_SCHEMA, metaVar="<version>", usage="set schema version")
+  @Option(name="--" + CONFIG_SCHEMA, metaVar="<version>", usage="set schema version")
   protected void setConfigSchema(String value) {
     config.put(CONFIG_SCHEMA, value);
   }
   
-  @Option (name="--set", aliases={"--define"}, metaVar="<name=value>", usage="set variable name to value")
+  @Option(name="--set", aliases={"--define"}, metaVar="<name=value>", usage="set variable name to value")
   protected void setDefine(String name_value) throws EvalException
   {
     String[] s = name_value.split("=", 2);
