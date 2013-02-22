@@ -3,6 +3,8 @@ package com.adahas.tools.jmxeval;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -106,6 +108,15 @@ public class App {
    */
   @SuppressWarnings("PMD.DoNotCallSystemExit")
   public static void main(final String...args) {
+    if (System.getProperty("java.util.logging.config.file") == null)
+    {
+      try {
+        LogManager.getLogManager().readConfiguration(App.class.getResourceAsStream("/logging.properties"));
+      } catch (Exception e) {
+        Logger.getAnonymousLogger().severe("Could not load default logging.properties file");
+        Logger.getAnonymousLogger().severe(e.getMessage());
+      }
+    }
     System.exit(
         new App().execute(
             args, new PrintWriter(System.out, true)
